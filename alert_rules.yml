@@ -1,0 +1,21 @@
+groups:
+  - name: http_alerts
+    rules:
+      - alert: DeleteRequestDetected
+        expr: rate(http_requests_total{method="DELETE"}[10m]) > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "DELETE request detected"
+          description: "DELETE request is noticed in the last 1 minute."
+  - name: AlwaysFiringAlerts
+    rules:
+      - alert: Always_Firing
+        expr: vector(1)
+        for: 0s
+        labels:
+          severity: critical
+        annotations:
+          summary: "this alert always fires"
+          description: "this alert always fires, it is used to test alertmanager and grafana"

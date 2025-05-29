@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 5s  
+  evaluation_interval: 5s  
+
+scrape_configs:
+  - job_name: 'flask_app'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['flask_app:5050']
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']
+
+rule_files:
+  - /etc/prometheus/alert_rules.yml
+
+
