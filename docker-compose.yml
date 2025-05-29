@@ -1,23 +1,29 @@
-version: '3.8'
-
 services:
   flask_app:
-    build: .
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile
     ports:
       - "5050:5050"
+    volumes:
+      - ./database/database.db:/app/database.db
     environment:
       - FLASK_ENV=development
+    restart: unless-stopped
     networks:
       - monitoring
+    depends_on:
+      - prometheus
+      - alertmanager
 
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./alert_rules.yml:/etc/prometheus/alert_rules.yml
     ports:
       - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
     networks:
       - monitoring
 
@@ -32,6 +38,9 @@ services:
       - monitoring
     depends_on:
       - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin  # Change this in production!
+      - GF_USERS_ALLOW_SIGN_UP=false
 
   alertmanager:
     image: prom/alertmanager
@@ -39,13 +48,17 @@ services:
     ports:
       - "9093:9093"
     volumes:
-      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    restart: unless-stopped
     networks:
       - monitoring
+
+volumes:
+  database:
+    driver: local
+  grafana_data:
+    driver: local
 
 networks:
   monitoring:
     driver: bridge
-
-volumes:
-  grafana_data:
