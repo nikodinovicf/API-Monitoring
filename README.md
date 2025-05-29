@@ -27,7 +27,7 @@ docker-compose up --build
 ```
 ### 3️⃣ **Check Active Routes**
 ```sh
-docker exec -it flask_app-1 bash
+docker exec -it api_prometheus-flask_app-1 bash
 python -m flask routes
 ```
 ### 4️⃣ **Health Check API**
@@ -35,11 +35,15 @@ python -m flask routes
 curl -X GET http://localhost:5050/api/healthz
 ```
 
-📊 Monitoring with Grafana
+### 📊 **Monitoring with Grafana**
 
     Access Grafana at http://localhost:3000
     Log in (admin/admin)
     Import Prometheus Data Source
     Visualize API Performance 📈
+
+### **Prometheus**
+
+    Access Prometheus at http://localhost:9090
 
 
