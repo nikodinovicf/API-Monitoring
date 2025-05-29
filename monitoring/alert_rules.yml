@@ -9,6 +9,7 @@ groups:
         annotations:
           summary: "DELETE request detected"
           description: "DELETE request is noticed in the last 1 minute."
+
   - name: AlwaysFiringAlerts
     rules:
       - alert: Always_Firing
@@ -17,5 +18,5 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: "this alert always fires"
-          description: "this alert always fires, it is used to test alertmanager and grafana"
+          summary: "This alert always fires"
+          description: "This alert always fires; it is used to test Alertmanager and Grafana."

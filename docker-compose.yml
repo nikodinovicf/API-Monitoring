@@ -23,6 +23,7 @@ services:
       - "9090:9090"
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alert_rules.yml:/etc/prometheus/alert_rules.yml
     restart: unless-stopped
     networks:
       - monitoring
@@ -61,4 +62,4 @@ volumes:
 
 networks:
   monitoring:
-    driver: bridge
+    driver: bridgeg
