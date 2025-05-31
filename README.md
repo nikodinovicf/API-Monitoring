@@ -46,4 +46,6 @@ curl -X GET http://localhost:5050/api/healthz
 
     Access Prometheus at http://localhost:9090
 
+### **MailHog**
 
+    Access MailHog at http://localhost:8025
